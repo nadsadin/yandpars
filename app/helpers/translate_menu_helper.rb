@@ -1,0 +1,3 @@
+module TranslateMenuHelper
+
+end
