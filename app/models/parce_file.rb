@@ -9,24 +9,24 @@ class ParceFile < ApplicationRecord
                  "//meta[@property='og:description']/@content",
                  "//meta[@name='twitter:title']/@content",
                  "//meta[@name='twitter:description']/@content",
-                 "nav ul li a span",
-                 "div.subheader div ul li a",
-                 "div ul li a",
-                 "h1",
-                 "h2",
-                 "h3",
-                 "h4",
-                 "div.desc h6",
-                 "span.date",
-                 ".copyright",
                  "input/@value",
                  "input/@placeholder",
-                 "option",
-                 "span",
-                 "label",
-                 "p"
+                 "p/text()",
+                 "div/text()",
+                 "a/text()",
+                 "strong/text()",
+                 "small/text()",
+                 "span/text()",
+                 "h1/text()",
+                 "h2/text()",
+                 "h3/text()",
+                 "h4/text()",
+                 "h5/text()",
+                 "h6/text()",
+                 "ul/text()",
+                 "li/text()",
       ).each do |str|
-        if str.content!=nil&&str.content!='\n'&&str.content!=''&&!str.content['']
+        if str.content!=nil&&str.content!=''
           self.report = self.report+str.name+'='+str.content+', '
           translation = TranslateMenu.find_by text: str.content
           if translation!=nil
@@ -43,3 +43,27 @@ class ParceFile < ApplicationRecord
     end
   end
 end
+#
+# "nav ul li a span",
+#     "div.subheader div ul li a",
+#     "div ul li a",
+#     "h1",
+#     "h2",
+#     "h3",
+#     "h4",
+#     "div.desc h6",
+#     "span.date",
+#     ".copyright",
+#     "option",
+#     "span",
+#     "label",
+#     "p"
+#
+#
+# "div.subheader div ul li a",
+#     "nav ul.menu li a span",
+#     "div.column h1",
+#     "ul.breadcrumbs li a",
+#     "nav.wpDropdownNavMenu div ul li a",
+#     "footer h4",
+#     "footer h6",
