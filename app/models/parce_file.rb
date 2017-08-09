@@ -3,8 +3,10 @@ class ParceFile < ApplicationRecord
     p = self.path+'**/*.html'
     self.report=''
     Dir[p].each do |f|
+      self.report = self.report+'path = '+f+'\n'
       doc = File.open(f){|ff| Nokogiri::HTML(ff)}
-      doc.search("title",
+      doc.search("img/@alt",
+                 "title",
                  "//meta[@property='og:title']/@content",
                  "//meta[@property='og:description']/@content",
                  "//meta[@name='twitter:title']/@content",
@@ -24,10 +26,9 @@ class ParceFile < ApplicationRecord
                  "h5/text()",
                  "h6/text()",
                  "ul/text()",
-                 "li/text()",
+                 "li/text()"
       ).each do |str|
         if str.content!=nil&&str.content!=''
-          self.report = self.report+str.name+'='+str.content+', '
           translation = TranslateMenu.find_by text: str.content
           if translation!=nil
             str.content = translation.result
